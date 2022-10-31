@@ -1,4 +1,6 @@
-/*window.addEventListener("load", () => {
+window.saveDataAcrossSessions = true
+
+window.addEventListener("load", () => {
     webgazer.setGazeListener(function (data, elapsedTime) {
         if (data == null) {
             return;
@@ -8,39 +10,42 @@
         console.log(xprediction, yprediction);
     }).begin();
 
+    setTimeout(() => {
+        webgazer.showVideoPreview(false)
+    }, 15000);
+
     setInterval(async () => {
         let data = await webgazer.getCurrentPrediction();
         console.log(data);
     }, 1000);
 });
-*/
 
-/*
-pruebax = 200
-pruebay = 140
- 
 // Seleccion de botones
 const botones = document.querySelectorAll ("button")
 
 // Deteccion de eye tracker sobre boton
-const isHovered = (e, cursor_x, cursor_y) => {
-    const pos = e.getBoundingClientRect();
-    return (cursor_x > pos.left && cursor_x <= pos.right && cursor_y > pos.top && cursor_y <= pos.bottom);
-}
 
-// Filtro del tipo de boton y ejecucion de su respectiva funcinalidad
-botones.forEach ((e) => {
-    if (isHovered(e, pruebax, pruebay)) {
-        e.mouseEnter();
-    } else {
-        e.mouseLeave();
-    }
-})*/
+window.addEventListener("load", () => {
+    webgazer.setGazeListener(function (data, elapsedTime) {
 
-// var elemento = document.getsElementById("btnA");
-// var posicion = elemento.getBoundingClientRect();
+        var xprediction = data.x
+        var yprediction = data.y
 
-//console.log(posicion.top, posicion.right, posicion.bottom, posicion.left);
+        const isHovered = (e, xpredictionn, ypredictionn) => {
+            const pos = e.getBoundingClientRect();
+            return (xprediction > pos.left && xprediction <= pos.right && yprediction > pos.top && yprediction <= pos.bottom);
+        }
+        
+        // Filtro del tipo de boton y ejecucion de su respectiva funcinalidad
+        botones.forEach ((e) => {
+            if (isHovered(e, xprediction, yprediction)) {
+                e.dispatchEvent(new Event("mouseenter"));
+            } else {
+                e.dispatchEvent(new Event("mouseleave"));
+            }
+        })
+    })
+});
 
 //Botones, Text Areas, etc.
 let onButton
@@ -116,6 +121,7 @@ for (let i = 0; i < seccionS.length; i++) {
     seccionS[i].addEventListener("mouseleave", handleLeave)
 }
 
+
 let seccion0 = document.getElementsByClassName ("btnseccion0")
 
 for (let i = 0; i < seccion0.length; i++) {
@@ -160,9 +166,9 @@ function vinicio(d) {
     onButton = d.target;
     setTimeout(() => {
         if (onButton === d.target) {
-            window.location.href = '/index.html'
+            window.location.href = './index.html'
         }
-    }, 2000);
+    }, 300);
 }
 
 function handleEnter(e) {
@@ -171,7 +177,7 @@ function handleEnter(e) {
         if(onButton === e.target){
             texto.value = texto.value + e.target.innerHTML;
         }
-    }, 2000);
+    }, 300);
 }
 
 function handleSubmit(e) {
@@ -184,7 +190,7 @@ function handleSubmit(e) {
             speakData.lang = 'es';
             window.speechSynthesis.speak(msg)
         }
-    }, 2000);
+    }, 300);
 }
 
 function done (e){
@@ -197,7 +203,7 @@ function done (e){
             msg.lang = 'es'
             window.speechSynthesis.speak(msg)
         }
-    }, 2000);
+    }, 300);
 }
 
 function espacio (a) {
@@ -206,7 +212,7 @@ function espacio (a) {
         if (onButton === a.target) {
             texto.value = texto.value += " ";
         }
-    }, 2000);
+    }, 300);
 }
 
 function borrar (b) {
@@ -214,7 +220,7 @@ function borrar (b) {
     setTimeout(() => {
         if (onButton === b.target) {
             texto.value = texto.value.substring(0, texto.value.length - 1)        }
-    }, 2000);
+    }, 300);
 }
 
 function borrar_completo (c) {
@@ -223,7 +229,7 @@ function borrar_completo (c) {
         if (onButton === c.target) {
             texto.value = texto.value.substring(0, texto.value) 
         }
-    },2000);
+    },300);
 }
 
 function seccion1 (d) {
@@ -232,7 +238,7 @@ function seccion1 (d) {
         if (onButton === d.target) {
             window.location.href = './A-I.html?texto=' + texto.value
         }
-    },2000);
+    },300);
 }
 
 function seccion2 (d) {
@@ -241,7 +247,7 @@ function seccion2 (d) {
         if (onButton === d.target) {
             window.location.href = './J-R.html?texto=' + texto.value
         }
-    },2000);
+    },300);
 }
 
 function seccion3 (d) {
@@ -250,7 +256,7 @@ function seccion3 (d) {
         if (onButton === d.target) {
             window.location.href = './S-Z.html?texto=' + texto.value
         }
-    },2000);
+    },300);
 }
 
 function seccion4 (d) {
@@ -259,7 +265,7 @@ function seccion4 (d) {
         if (onButton === d.target) {
             window.location.href = './0-9.html?texto=' + texto.value
         }
-    },2000);
+    },300);
 }
 
 function seccion5 (d) {
@@ -268,5 +274,5 @@ function seccion5 (d) {
         if (onButton === d.target) {
             window.location.href = './signos.html?texto=' + texto.value
         }
-    },2000);
+    },300);
 }
